@@ -1,3 +1,6 @@
+
+#ifndef SIMBODY_WITHOUT_LAPACK
+
 #ifndef SimTK_FORTRAN_LAPACK_H_
 #define SimTK_FORTRAN_LAPACK_H_
 
@@ -3213,3 +3216,4 @@ extern void zupmtr_(SimTK_FOPT_(side), SimTK_FOPT_(uplo), SimTK_FOPT_(trans), Si
 
 #endif /* SimTK_SIMTKLAPACK_H_ */
 
+#endif // SIMBODY_WITHOUT_LAPACK
