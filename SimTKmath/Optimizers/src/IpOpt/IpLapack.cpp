@@ -22,37 +22,68 @@
 // Prototypes for the LAPACK routines
 extern "C"
 {
+#ifdef __EMSCRIPTEN__
+  /** LAPACK Fortran subroutine DPOTRS. */
+  int dpotrs_(char *uplo, ipfint *n,
+                               ipfint *nrhs, const double *A, ipfint *ldA,
+                               double *B, ipfint *ldB, ipfint *info);
+  /** LAPACK Fortran subroutine DPOTRF. */
+  int dpotrf_(char *uplo, ipfint *n,
+                               double *A, ipfint *ldA,
+                               ipfint *info);
+
+  /** LAPACK Fortran subroutine DSYEV */
+  int dsyev_(char *jobz, char *uplo, ipfint *n,
+                             double *A, ipfint *ldA, double *W,
+                             double *WORK, ipfint *LWORK, ipfint *info);
+
+  /** LAPACK Fortran subroutine DPOTRS. */
+  int spotrs_(char *uplo, ipfint *n,
+                               ipfint *nrhs, const float *A, ipfint *ldA,
+                               float *B, ipfint *ldB, ipfint *info);
+  /** LAPACK Fortran subroutine DPOTRF. */
+  int spotrf_(char *uplo, ipfint *n,
+                               float *A, ipfint *ldA,
+                               ipfint *info);
+
+  /** LAPACK Fortran subroutine DSYEV */
+  int ssyev_(char *jobz, char *uplo, ipfint *n,
+                             float *A, ipfint *ldA, float *W,
+                             float *WORK, ipfint *LWORK, ipfint *info);
+#else
+
   /** LAPACK Fortran subroutine DPOTRS. */
   void dpotrs_(char *uplo, ipfint *n,
                                ipfint *nrhs, const double *A, ipfint *ldA,
                                double *B, ipfint *ldB, ipfint *info,
-                               int uplo_len);
+                               int uplo_len=1);
   /** LAPACK Fortran subroutine DPOTRF. */
   void dpotrf_(char *uplo, ipfint *n,
                                double *A, ipfint *ldA,
-                               ipfint *info, int uplo_len);
+                               ipfint *info, int uplo_len=1);
 
   /** LAPACK Fortran subroutine DSYEV */
   void dsyev_(char *jobz, char *uplo, ipfint *n,
                              double *A, ipfint *ldA, double *W,
                              double *WORK, ipfint *LWORK, ipfint *info,
-                             int jobz_len, int uplo_len);
+                             int jobz_len=1, int uplo_len=1);
 
   /** LAPACK Fortran subroutine DPOTRS. */
   void spotrs_(char *uplo, ipfint *n,
                                ipfint *nrhs, const float *A, ipfint *ldA,
                                float *B, ipfint *ldB, ipfint *info,
-                               int uplo_len);
+                               int uplo_len=1);
   /** LAPACK Fortran subroutine DPOTRF. */
   void spotrf_(char *uplo, ipfint *n,
                                float *A, ipfint *ldA,
-                               ipfint *info, int uplo_len);
+                               ipfint *info, int uplo_len=1);
 
   /** LAPACK Fortran subroutine DSYEV */
   void ssyev_(char *jobz, char *uplo, ipfint *n,
                              float *A, ipfint *ldA, float *W,
                              float *WORK, ipfint *LWORK, ipfint *info,
-                             int jobz_len, int uplo_len);
+                             int jobz_len=1, int uplo_len=1);
+#endif
 }
 
 namespace SimTKIpopt
@@ -65,7 +96,7 @@ namespace SimTKIpopt
     ipfint N=ndim, NRHS=nrhs, LDA=lda, LDB=ldb, INFO;
     char uplo = 'L';
 
-    DPOTRS(&uplo, &N, &NRHS, a, &LDA, b, &LDB, &INFO, 1);
+    DPOTRS(&uplo, &N, &NRHS, a, &LDA, b, &LDB, &INFO);
     DBG_ASSERT(INFO==0);
 #else
 
@@ -82,7 +113,7 @@ namespace SimTKIpopt
 
     char UPLO = 'L';
 
-    DPOTRF(&UPLO, &N, a, &LDA, &INFO, 1);
+    DPOTRF(&UPLO, &N, a, &LDA, &INFO);
 
     info = INFO;
 #else
@@ -112,7 +143,7 @@ namespace SimTKIpopt
     ipfint LWORK = -1;
     Number WORK_PROBE;
     DSYEV(&JOBZ, &UPLO, &N, a, &LDA, w,
-          &WORK_PROBE, &LWORK, &INFO, 1, 1);
+          &WORK_PROBE, &LWORK, &INFO);
     DBG_ASSERT(INFO==0);
 
     LWORK = (ipfint) WORK_PROBE;
@@ -123,7 +154,7 @@ namespace SimTKIpopt
       WORK[i] = Number(i);
     }
     DSYEV(&JOBZ, &UPLO, &N, a, &LDA, w,
-          WORK, &LWORK, &INFO, 1, 1);
+          WORK, &LWORK, &INFO);
 
     DBG_ASSERT(INFO>=0);
     info = INFO;

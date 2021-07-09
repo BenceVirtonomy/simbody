@@ -181,7 +181,7 @@ namespace SimTKIpopt
       work = new Number[lwork];
       atmp = new Number[n*n];
       for(i=0;i<n*n;i++) atmp[i] = a[i];
-      DSYEV(jobz, uplo, n, atmp, n, w, work, lwork, info,  1, 1);
+      DSYEV(jobz, uplo, n, atmp, n, w, work, lwork, info);
       if( info != 0 ) {
           delete [] w;
           delete [] work;
@@ -216,7 +216,7 @@ namespace SimTKIpopt
     int info;
     char transpose = 'N';
 
-    DGETRS( transpose, n, nrhs, a, n, ipiv_, b, n, info, 1);
+    DGETRS( transpose, n, nrhs, a, n, ipiv_, b, n, info);
     if( info != 0 ) {
         if( info > 0 && info <= n  ) {
             retval = SYMSOLVER_SINGULAR;

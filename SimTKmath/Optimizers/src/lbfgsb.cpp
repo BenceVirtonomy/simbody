@@ -1523,7 +1523,7 @@ static int formk_(
 /*                                    [(-L_a +R_z)L'^-1   S'AA'S*theta  ] */
 /*        first Cholesky factor (1,1) block of wn to get LL' */
 /*                          with L' stored in the upper triangle of wn. */
-    DPOTRF((const char &)'U', *col, &wn[wn_offset], (const int &)m2, *info, 1);
+    DPOTRF((const char &)'U', *col, &wn[wn_offset], (const int &)m2, *info);
 /*    dpofa_(&wn[wn_offset], &m2, col, info);     LINPACK
     if (*info != 0) {
     *info = -1;
@@ -1550,7 +1550,7 @@ static int formk_(
 /* L72: */
     }
 /*     Cholesky factorization of (2,2) block of wn. */
-    DPOTRF((const char&)'U', *col, &wn[*col + 1 + (*col + 1) * wn_dim1], (const int&)m2, *info, 1);
+    DPOTRF((const char&)'U', *col, &wn[*col + 1 + (*col + 1) * wn_dim1], (const int&)m2, *info);
 /*    dpofa_(&wn[*col + 1 + (*col + 1) * wn_dim1], &m2, col, info);
     if (*info != 0) {
     *info = -2;
@@ -1638,7 +1638,7 @@ int *col, Real *theta, int *info)
     }
 /*     Cholesky factorize T to J*J' with */
 /*        J' stored in the upper triangle of wt. */
-    DPOTRF((const char&)'U', *col, &wt[wt_offset], *m, *info, 1);
+    DPOTRF((const char&)'U', *col, &wt[wt_offset], *m, *info);
 /*    dpofa_(&wt[wt_offset], m, col, info);         LINPACK
     if (*info != 0) {
     *info = -3;
