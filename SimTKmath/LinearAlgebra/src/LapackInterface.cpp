@@ -34,6 +34,10 @@
 #include "WorkSpace.h"
 #include <cstring>
 #include <stdexcept>
+#include <complex>
+#include <Eigen/Eigenvalues> 
+using namespace std;
+using namespace Eigen;
 
 #ifdef _MSC_VER
 #pragma warning(disable:4996) // don't warn about strcat, sprintf, etc.
@@ -680,7 +684,20 @@ template <> void LapackInterface::geev<double>
     int lwork, int& info )
 {
 #ifdef SIMBODY_WITHOUT_LAPACK
-    throw std::runtime_error(std::string("LapackInterface::geev called"));
+    // throw std::runtime_error(std::string("LapackInterface::geev called"));
+    // TODO: use eigen to replace dgeev_
+    MatrixXd matrix(n,n);
+    int m = n;
+    for(int col=0;col<n;col++) {
+        for(int row=0;row<m;row++)  {
+             matrix(row,col) = a[col*m+row];
+        }
+    }    
+    
+    ComplexEigenSolver<MatrixXd> ces(matrix, /* computeEigenvectors = */ false);
+    cout << "The eigenvalues of the 3x3 matrix of ones are:" 
+        << endl << ces.eigenvalues() << endl;
+
 #elif SIMBODY_WITHOUT_LAPACK
     TypedWorkSpace<double> wr(n);
     TypedWorkSpace<double> wi(n);
