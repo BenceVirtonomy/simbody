@@ -1,5 +1,5 @@
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake) # main (top) cmake dir
-include(Headersearch)
+include(${CMAKE_SOURCE_DIR}/SPHINXsys/cmake/Headersearch.cmake)
 
 file(GLOB BASE_DIR_HEADERS *.h)
 DIR_INC_HEADER_NAMES("${BASE_DIR_HEADERS}" BASE_DIR_HEADER_NAMES)
