@@ -52,6 +52,19 @@
 #include <ctime>
 #include <cstring>
 
+
+#ifdef SIMBODY_WITHOUT_LAPACK
+int SimTK::LBFGSBOptimizer::setulb_(int *n, int *m, Real *x, Real *l,
+      Real *u, int *nbd, Real *f, Real *g,
+      Real *factr, Real *pgtol, Real *wa, int *iwa,
+      char *task, int *iprint, char *csave, bool *lsave,
+      int *isave, Real *dsave, long task_len, long csave_len)
+      { 
+          throw std::runtime_error(std::string("SimTK::LBFGSBOptimizer::setulb_ called"));
+          return 0;
+        }
+#elif SIMBODY_WITHOUT_LAPACK
+
 #ifdef _MSC_VER
 #pragma warning(disable:4996) // don't warn about strcat, sprintf, etc.
 #endif
@@ -5163,3 +5176,4 @@ int SimTK::LBFGSBOptimizer::setulb_(int *n, int *m, Real *x, Real *l,
 } /* setulb_ */
 
 /* ======================= The end of setulb ============================= */
+#endif
