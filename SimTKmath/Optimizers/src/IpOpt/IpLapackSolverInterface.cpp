@@ -67,7 +67,7 @@ namespace SimTKIpopt
     throw std::runtime_error(std::string("LapackSolverInterface::MultiSolve called"));
     ESymSolverStatus retval = SYMSOLVER_SUCCESS;
     return retval;
-#elif SIMBODY_WITHOUT_LAPACK
+#else SIMBODY_WITHOUT_LAPACK
     int i;
     Number *atmp;
     DBG_START_METH("LapackSolverInterface::MultiSolve", dbg_verbosity);
@@ -177,7 +177,7 @@ namespace SimTKIpopt
     throw std::runtime_error(std::string("LapackSolverInterface::Factorization called"));
     ESymSolverStatus retval = SYMSOLVER_SUCCESS;
     return retval;
-#elif SIMBODY_WITHOUT_LAPACK
+#else SIMBODY_WITHOUT_LAPACK
       DBG_START_METH("LapackSolverInterface::Factorization", dbg_verbosity);
       ESymSolverStatus retval = SYMSOLVER_SUCCESS;
       int info,lwork;
@@ -232,7 +232,7 @@ namespace SimTKIpopt
     throw std::runtime_error(std::string("LapackSolverInterface::Solve called"));
     ESymSolverStatus retval = SYMSOLVER_SUCCESS;
     return retval;
-#elif SIMBODY_WITHOUT_LAPACK
+#else SIMBODY_WITHOUT_LAPACK
     DBG_START_METH("LapackSolverInterface::Solve", dbg_verbosity);
     ESymSolverStatus retval = SYMSOLVER_SUCCESS;
     int info;

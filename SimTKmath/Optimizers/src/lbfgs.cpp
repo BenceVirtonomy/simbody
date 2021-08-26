@@ -38,7 +38,7 @@ void SimTK::LBFGSOptimizer::lbfgs_
       { 
           throw std::runtime_error(std::string("SimTK::LBFGSOptimizer::lbfgs_ called"));
         }
-#elif SIMBODY_WITHOUT_LAPACK
+#else SIMBODY_WITHOUT_LAPACK
 
 #ifdef _MSC_VER
 #pragma warning(disable:4996) // don't warn about strcat, sprintf, etc.

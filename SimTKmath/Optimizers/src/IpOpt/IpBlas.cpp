@@ -144,7 +144,7 @@ namespace SimTKIpopt
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("SimTKIpopt::IpBlasDdot called"));
     return 0;
-#elif SIMBODY_WITHOUT_LAPACK
+#else SIMBODY_WITHOUT_LAPACK
     ipfint n=size, INCX=incX, INCY=incY;
 
     return DDOT(&n, x, &INCX, y, &INCY);
@@ -157,7 +157,7 @@ namespace SimTKIpopt
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("SimTKIpopt::IpBlasDnrm2 called"));
     return 0;
-#elif SIMBODY_WITHOUT_LAPACK
+#else SIMBODY_WITHOUT_LAPACK
     ipfint n=size, INCX=incX;
 
     return DNRM2(&n, x, &INCX);
@@ -170,7 +170,7 @@ namespace SimTKIpopt
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("SimTKIpopt::IpBlasDasum called"));
     return 0;
-#elif SIMBODY_WITHOUT_LAPACK
+#else SIMBODY_WITHOUT_LAPACK
     ipfint n=size, INCX=incX;
 
     return DASUM(&n, x, &INCX);
@@ -183,7 +183,7 @@ namespace SimTKIpopt
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("SimTKIpopt::IpBlasIdamax called"));
     return 0;
-#elif SIMBODY_WITHOUT_LAPACK
+#else SIMBODY_WITHOUT_LAPACK
     ipfint n=size, INCX=incX;
 
     return (Index) IDAMAX(&n, x, &INCX);
@@ -195,7 +195,7 @@ namespace SimTKIpopt
   {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("SimTKIpopt::IpBlasDcopy called"));
-#elif SIMBODY_WITHOUT_LAPACK
+#else SIMBODY_WITHOUT_LAPACK
     ipfint N=size, INCX=incX, INCY=incY;
 
     DCOPY(&N, x, &INCX, y, &INCY);
@@ -208,7 +208,7 @@ namespace SimTKIpopt
   {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("SimTKIpopt::IpBlasDaxpy called"));
-#elif SIMBODY_WITHOUT_LAPACK
+#else SIMBODY_WITHOUT_LAPACK
     ipfint N=size, INCX=incX, INCY=incY;
 
     DAXPY(&N, &alpha, x, &INCX, y, &INCY);
@@ -220,7 +220,7 @@ namespace SimTKIpopt
   {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("SimTKIpopt::IpBlasDscal called"));
-#elif SIMBODY_WITHOUT_LAPACK
+#else SIMBODY_WITHOUT_LAPACK
     ipfint N=size, INCX=incX;
 
     DSCAL(&N, &alpha, x, &INCX);
@@ -233,7 +233,7 @@ namespace SimTKIpopt
   {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("SimTKIpopt::IpBlasDgemv called"));
-#elif SIMBODY_WITHOUT_LAPACK
+#else SIMBODY_WITHOUT_LAPACK
     ipfint M=nCols, N=nRows, LDA=ldA, INCX=incX, INCY=incY;
 
     char TRANS;
@@ -255,7 +255,7 @@ namespace SimTKIpopt
   {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("SimTKIpopt::IpBlasDsymv called"));
-#elif SIMBODY_WITHOUT_LAPACK
+#else SIMBODY_WITHOUT_LAPACK
     ipfint N=n, LDA=ldA, INCX=incX, INCY=incY;
 
     char UPLO='L';
@@ -271,7 +271,7 @@ namespace SimTKIpopt
   {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("SimTKIpopt::IpBlasDgemm called"));
-#elif SIMBODY_WITHOUT_LAPACK
+#else SIMBODY_WITHOUT_LAPACK
     ipfint M=m, N=n, K=k, LDA=ldA, LDB=ldB, LDC=ldC;
 
     char TRANSA;
@@ -300,7 +300,7 @@ namespace SimTKIpopt
   {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("SimTKIpopt::IpBlasDsyrk called"));
-#elif SIMBODY_WITHOUT_LAPACK
+#else SIMBODY_WITHOUT_LAPACK
     ipfint N=ndim, K=nrank, LDA=ldA, LDC=ldC;
 
     char UPLO='L';
@@ -322,7 +322,7 @@ namespace SimTKIpopt
   {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("SimTKIpopt::IpBlasDtrsm called"));
-#elif SIMBODY_WITHOUT_LAPACK
+#else SIMBODY_WITHOUT_LAPACK
     ipfint M=ndim, N=nrhs, LDA=ldA, LDB=ldB;
 
     char SIDE = 'L';
