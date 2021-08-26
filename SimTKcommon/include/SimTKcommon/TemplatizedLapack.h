@@ -139,7 +139,7 @@ template <> inline void Lapack::getri<float>
 {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("Lapack::getri called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     sgetri_(n,a,lda,ipiv,work,lwork,info);
 #endif
 }
@@ -155,7 +155,7 @@ template <> inline void Lapack::getri<double>
 {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("Lapack::getri called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     dgetri_(n,a,lda,ipiv,work,lwork,info);
 #endif
 }
@@ -171,7 +171,7 @@ template <> inline void Lapack::getri< complex<float> >
 {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("Lapack::getri called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     cgetri_(n,a,lda,ipiv,work,lwork,info);
 #endif
 }
@@ -187,7 +187,7 @@ template <> inline void Lapack::getri< complex<double> >
 {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("Lapack::getri called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     zgetri_(n,a,lda,ipiv,work,lwork,info);
 #endif
 }
@@ -203,7 +203,7 @@ template <> inline void Lapack::getrf<float>
 {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("Lapack::getrf called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     sgetrf_(m,n,a,lda,ipiv,info);
 #endif
 }
@@ -218,7 +218,7 @@ template <> inline void Lapack::getrf<double>
 {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("Lapack::getrf called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     dgetrf_(m,n,a,lda,ipiv,info);
 #endif
 }
@@ -233,7 +233,7 @@ template <> inline void Lapack::getrf< complex<float> >
 {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("Lapack::getrf called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     cgetrf_(m,n,a,lda,ipiv,info);
 #endif
 }
@@ -248,7 +248,7 @@ template <> inline void Lapack::getrf< complex<double> >
 {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("Lapack::getrf called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     zgetrf_(m,n,a,lda,ipiv,info);
 #endif
 }

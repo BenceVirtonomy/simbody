@@ -68,7 +68,7 @@ namespace SimTKIpopt
   {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("SimTKIpopt::IpLapackDpotrs called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
 #ifdef COIN_HAS_LAPACK
     ipfint N=ndim, NRHS=nrhs, LDA=lda, LDB=ldb, INFO;
     char uplo = 'L';
@@ -87,7 +87,7 @@ namespace SimTKIpopt
   {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("SimTKIpopt::IpLapackDpotrf called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
 #ifdef COIN_HAS_LAPACK
     ipfint N=ndim, LDA=lda, INFO;
 
@@ -109,7 +109,7 @@ namespace SimTKIpopt
   {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("SimTKIpopt::IpLapackDsyev called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
 #ifdef COIN_HAS_LAPACK
     ipfint N=ndim, LDA=lda, INFO;
 

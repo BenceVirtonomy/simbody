@@ -62,7 +62,7 @@ template <> void LapackInterface::gelss<double>( int m, int n,  int mn, int nrhs
            double rcond, int& rank, int& info){ 
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::gelss called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     double wsize[1];
     dgelss_(m, n, nrhs, a, lda, b, ldb, s, rcond, rank, wsize, -1, info );
 
@@ -82,7 +82,7 @@ template <> void LapackInterface::gelss<float>( int m, int n,  int mn, int nrhs,
            float rcond, int& rank, int& info){ 
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::gelss called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     float wsize[1];
     sgelss_(m, n, nrhs, a, lda, b, ldb, s, rcond, rank, wsize, -1, info );
 
@@ -102,7 +102,7 @@ template <> void LapackInterface::gelss<std::complex<float> >( int m, int n,  in
            float rcond, int& rank, int& info){ 
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::gelss called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     std::complex<float>  wsize[1];
     TypedWorkSpace<float> rwork(5*mn);
     cgelss_(m, n, nrhs, a, lda, b, ldb, s, rcond, rank, wsize, -1, rwork.data, info );
@@ -123,7 +123,7 @@ template <> void LapackInterface::gelss<std::complex<double> >( int m, int n,  i
            double rcond, int& rank, int& info){ 
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::gelss called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     TypedWorkSpace<double> rwork(5*mn);
     std::complex<double>  wsize[1];
     zgelss_(m, n, nrhs, a, lda, b, ldb, s, rcond, rank, wsize, -1, rwork.data, info );
@@ -144,7 +144,7 @@ template <> void LapackInterface::potrs<double>
     ( char uplo, const int ncol, const int nrhs, const double *lu,  double *b ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::potrs called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     int info;
 
     dpotrs_(uplo, ncol, nrhs, lu, ncol, b, ncol, info, 1  );
@@ -161,7 +161,7 @@ template <> void LapackInterface::potrs<float>
     ( char uplo, const int ncol, const int nrhs, const float *lu,  float *b ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::potrs called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     int info;
 
     spotrs_(uplo, ncol, nrhs, lu, ncol, b, ncol, info, 1  );
@@ -178,7 +178,7 @@ template <> void LapackInterface::potrs<std::complex<float> >
     ( char uplo, const int ncol, const int nrhs, const std::complex<float>* lu,  std::complex<float>* b ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::potrs called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     int info;
 
     cpotrs_(uplo, ncol, nrhs, lu, ncol, b, ncol, info, 1  );
@@ -195,7 +195,7 @@ template <> void LapackInterface::potrs<std::complex<double> >
     ( char uplo, const int ncol, const int nrhs, const std::complex<double>* lu,  std::complex<double>* b ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::potrs called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     int info;
 
     zpotrs_(uplo, ncol, nrhs, lu, ncol, b, ncol, info, 1  );
@@ -212,7 +212,7 @@ template <> void LapackInterface::sytrs<double>
 ( char trans,  const int ncol, const int nrhs, double *lu,  int *pivots, double *b ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::sytrs called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     int info;
 
     dsytrs_(trans, ncol, nrhs, lu, ncol, pivots, b, ncol, info, 1  );
@@ -230,7 +230,7 @@ template <> void LapackInterface::sytrs<float>
     ( char trans, const int ncol, const int nrhs, float *lu, int *pivots, float *b ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::sytrs called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     int info;
 
     ssytrs_(trans, ncol, nrhs, lu, ncol, pivots, b, ncol, info, 1  );
@@ -248,7 +248,7 @@ template <> void LapackInterface::sytrs<std::complex<float> >
     ( char trans, const int ncol, const int nrhs, std::complex<float>* lu, int *pivots, std::complex<float>* b ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::sytrs called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     int info;
 
     chetrs_(trans, ncol, nrhs, lu, ncol, pivots, b, ncol, info, 1  );
@@ -267,7 +267,7 @@ template <> void LapackInterface::sytrs<std::complex<double> >
     ( char trans, const int ncol, const int nrhs, std::complex<double>* lu, int *pivots, std::complex<double>* b ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::sytrs called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     int info;
 
     zhetrs_(trans, ncol, nrhs, lu, ncol, pivots, b, ncol, info, 1  );
@@ -284,7 +284,7 @@ template <> void LapackInterface::getrs<double>
     ( char trans, const int ncol, const int nrhs, const double *lu, const int *pivots, double *b ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::getrs called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     int info;
 
     dgetrs_(trans, ncol, nrhs, lu, ncol, pivots, b, ncol, info, 1  );
@@ -302,7 +302,7 @@ template <> void LapackInterface::getrs<float>
     ( char trans , const int ncol, const int nrhs, const float *lu, const int *pivots, float *b ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::getrs called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     int info;
 
     sgetrs_(trans, ncol, nrhs, lu, ncol, pivots, b, ncol, info, 1  );
@@ -319,7 +319,7 @@ template <> void LapackInterface::getrs<complex<float> >
     ( char trans, const int ncol, const int nrhs, const std::complex<float> *lu, const int *pivots, complex<float> *b ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::getrs called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     int info;
 
     cgetrs_(trans, ncol, nrhs, lu, ncol, pivots, b, ncol, info, 1  );
@@ -335,7 +335,7 @@ template <> void LapackInterface::getrs<complex<double> >
     ( char trans, const int ncol, const int nrhs, const complex<double> *lu, const int *pivots, complex<double> *b ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::getrs called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     int info;
 
     zgetrs_(trans, ncol, nrhs, lu, ncol, pivots, b, ncol, info, 1  );
@@ -361,7 +361,7 @@ template <> void LapackInterface::syevx<float>( char jobz, char range,
     int LDVectors, int* ifail, int& info ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::syevx called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     TypedWorkSpace<int> iwork(5*n);
     float wsize[1];
     ssyevx_( jobz, range, uplo, n, a, lda, vl, vu, il, iu, abstol, nFound,
@@ -388,7 +388,7 @@ template <> void LapackInterface::syevx<double>( char jobz, char range,
     int LDVectors, int* ifail, int& info ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::syevx called"));
-#else SIMBODY_WITHOUT_LAPACK    
+#else    
     TypedWorkSpace<int> iwork(5*n);
     double wsize[1];
     dsyevx_( jobz, range, uplo, n, a, lda, vl, vu, il, iu, abstol, nFound,
@@ -415,7 +415,7 @@ template <> void LapackInterface::syevx<std::complex<double> >( char jobz,
     std::complex<double>* vectors, int LDVectors, int* ifail, int& info ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::syevx called"));
-#else SIMBODY_WITHOUT_LAPACK    
+#else    
     TypedWorkSpace<int> iwork(5*n);
     TypedWorkSpace<double> rwork( 7*n );
     std::complex<double>  wsize[1];
@@ -443,7 +443,7 @@ template <> void LapackInterface::syevx<std::complex<float> >( char jobz,
     std::complex<float>* vectors, int LDVectors, int* ifail, int& info ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::syevx called"));
-#else SIMBODY_WITHOUT_LAPACK      
+#else      
     TypedWorkSpace<int> iwork(5*n);
     TypedWorkSpace<float> rwork( 7*n );
     std::complex<float> wsize[1];
@@ -475,7 +475,7 @@ template <> void LapackInterface::syev<float>( char jobz,  char uplo, int n,
     float* a, int lda, float* eigenValues, int& info ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::syev called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     float wsize[1];
     ssyev_( jobz, uplo, n, a, lda, eigenValues, wsize, -1, info,  1, 1 );
     int lwork = (int)wsize[0];
@@ -492,7 +492,7 @@ template <> void LapackInterface::syev<double>( char jobz,  char uplo, int n,
     double* a, int lda, double* eigenValues, int& info ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::syev called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     double wsize[1];
     dsyev_( jobz, uplo, n, a, lda, eigenValues, wsize, -1, info,  1, 1 );
     int lwork = (int)wsize[0];
@@ -509,7 +509,7 @@ template <> void LapackInterface::syev<std::complex<float> >( char jobz,  char u
     std::complex<float>* a, int lda, float* eigenValues, int& info ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::syev called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     std::complex<float> wsize[1];
     int l = 3*n -2;
     if( l < 1 ) l = 1;
@@ -532,7 +532,7 @@ template <> void LapackInterface::syev<std::complex<double> >( char jobz,  char 
     std::complex<double>* a, int lda, double* eigenValues, int& info ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::syev called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     std::complex<double> wsize[1];
     int l = 3*n -2;
     if( l < 1 ) l = 1;
@@ -563,7 +563,7 @@ void LapackInterface::gesdd<float>( char jobz, int m, int n, float* a, int lda,
            int ldvt, int& info ){
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::gesdd called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     int lwork;
     int mn = (m < n ) ? m : n;  // min(m,n)
     TypedWorkSpace<float> work(1);
@@ -585,7 +585,7 @@ void LapackInterface::gesdd<double>( char jobz, int m, int n, double* a, int lda
            int ldvt, int& info ){
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::gesdd called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     int lwork;
     int mn = (m < n ) ? m : n;  // min(m,n)
     TypedWorkSpace<double> work(1);
@@ -614,7 +614,7 @@ void LapackInterface::gesdd<std::complex<float> >( char jobz, int m, int n,
       int ldu,  std::complex<float>* vt, int ldvt, int& info ){
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::gesdd called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     int mn = (m < n ) ? m : n;  // min(m,n)
     TypedWorkSpace<float> rwork;
     if( jobz == 'N' ) {
@@ -644,7 +644,7 @@ void LapackInterface::gesdd<std::complex<double> >( char jobz, int m, int n,
       int ldu,  std::complex<double>* vt, int ldvt, int& info ){
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::gesdd called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     int mn = (m < n ) ? m : n;  // min(m,n)
     TypedWorkSpace<double> rwork;
     if( jobz == 'N' ) {
@@ -754,7 +754,7 @@ template <> void LapackInterface::geev<float>
 {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::geev called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     TypedWorkSpace<float> wr(n);
     TypedWorkSpace<float> wi(n);
     TypedWorkSpace<float> vr(n*n);
@@ -806,7 +806,7 @@ template <> void LapackInterface::geev<std::complex<float> >
 {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::geev called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     TypedWorkSpace<float> Rwork(2*n);
     cgeev_( jobvl, jobvr, 
              n, a, lda, values,  vl, ldvl, rightVectors, ldvr, 
@@ -827,7 +827,7 @@ template <> void LapackInterface::geev<std::complex<double> >
 {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::geev called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     TypedWorkSpace<double> Rwork(2*n);
     zgeev_( jobvl, jobvr, 
              n, a, lda, values,  vl, ldvl, rightVectors, ldvr, 
@@ -844,7 +844,7 @@ template <>
 void  LapackInterface::getrf<double>( const int m, const int n, double *lu, const int lda,  int *pivots, int& info ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::getrf called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     dgetrf_(m, n, lu, lda, pivots, info   );
 #endif
    return;
@@ -853,7 +853,7 @@ template <>
 void  LapackInterface::getrf<float>( const int m, const int n, float *lu, const int lda,  int *pivots, int& info ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::getrf called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     sgetrf_(m, n, lu, lda, pivots, info   );
 #endif
    return;
@@ -863,7 +863,7 @@ template <>
 void  LapackInterface::getrf<std::complex<double> >( const int m, const int n, std::complex<double> *lu, const int lda,  int *pivots, int& info ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::getrf called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     zgetrf_(m, n, lu, lda, pivots, info   );
 
     if( info < 0 ) {
@@ -877,7 +877,7 @@ template <>
 void  LapackInterface::getrf<std::complex<float> >( const int m, const int n, std::complex<float> *lu, const int lda,  int *pivots, int& info ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::getrf called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     cgetrf_(m, n, lu, lda, pivots, info   );
 
     if( info < 0 ) {
@@ -891,7 +891,7 @@ template <>
 void LapackInterface::tzrzf<double>( const int& m, const int& n,  double* a, const int& lda, double* tau, double* work, const int& lwork, int& info ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::tzrzf called"));
-#else SIMBODY_WITHOUT_LAPACK
+#else
     dtzrzf_(m, n, a, lda, tau, work, lwork, info );
 
     if( info < 0 ) {
@@ -905,7 +905,7 @@ template <>
 void LapackInterface::tzrzf<float>( const int& m, const int& n,  float* a, const int& lda, float* tau, float* work, const int& lwork, int& info ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::tzrzf called"));
-#else SIMBODY_WITHOUT_LAPACK    
+#else    
     stzrzf_(m, n, a, lda, tau, work, lwork, info );
 
     if( info < 0 ) {
@@ -919,7 +919,7 @@ template <>
 void LapackInterface::tzrzf<std::complex<double> >( const int& m, const int& n,  std::complex<double>* a, const int& lda, std::complex<double>* tau, std::complex<double>* work, const int& lwork, int& info ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::tzrzf called"));
-#else SIMBODY_WITHOUT_LAPACK      
+#else      
     ztzrzf_(m, n, a, lda, tau, work, lwork, info );
 #endif
     return;
@@ -929,7 +929,7 @@ template <>
 void LapackInterface::tzrzf<std::complex<float> >( const int& m, const int& n,  std::complex<float>* a, const int& lda, std::complex<float>* tau, std::complex<float>* work, const int& lwork, int& info ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::tzrzf called"));
-#else SIMBODY_WITHOUT_LAPACK      
+#else      
     ctzrzf_(m, n, a, lda, tau, work, lwork, info );
 
     if( info < 0 ) {
@@ -943,7 +943,7 @@ template <>
 void LapackInterface::geqp3<double>( const int& m, const int& n,  double* a, const int& lda, int *pivots, double* tau, double* work, const int& lwork, int& info ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::geqp3 called"));
-#else SIMBODY_WITHOUT_LAPACK       
+#else       
      dgeqp3_( m, n, a, lda, pivots, tau, work, lwork, info );
 
     if( info < 0 ) {
@@ -957,7 +957,7 @@ template <>
 void LapackInterface::geqp3<float>( const int& m, const int& n,  float* a, const int& lda, int *pivots, float* tau, float* work, const int& lwork, int& info ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::geqp3 called"));
-#else SIMBODY_WITHOUT_LAPACK        
+#else        
      sgeqp3_( m, n, a, lda, pivots, tau, work, lwork, info );
 
     if( info < 0 ) {
@@ -972,7 +972,7 @@ void LapackInterface::geqp3<std::complex<float> >( const int& m, const int& n,  
      TypedWorkSpace<float> rwork(2*n);
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::geqp3 called"));
-#else SIMBODY_WITHOUT_LAPACK         
+#else         
      cgeqp3_( m, n, a, lda, pivots, tau, work, lwork, rwork.data, info );
 
     if( info < 0 ) {
@@ -987,7 +987,7 @@ void LapackInterface::geqp3<std::complex<double> >( const int& m, const int& n, 
      TypedWorkSpace<double> rwork(2*n);
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::geqp3 called"));
-#else SIMBODY_WITHOUT_LAPACK       
+#else       
      zgeqp3_( m, n, a, lda, pivots, tau, work,  lwork, rwork.data, info );
 
     if( info < 0 ) {
@@ -1001,7 +1001,7 @@ template <>
 void LapackInterface::lascl<double>( const char& type, const int& kl, const int& ku, const double& cfrom, const double& cto,  const int& m, const int& n, double* a, const int& lda, int& info ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::lascl called"));
-#else SIMBODY_WITHOUT_LAPACK  
+#else  
 //TODO     dlascl_( type, kl, ku, cfrom, cto, m, n, a, lda, info, 1 ); 
     dlascl_( type, kl, ku, &cfrom, &cto, m, n, a, lda, info, 1 ); 
 
@@ -1016,7 +1016,7 @@ template <>
 void LapackInterface::lascl<float>( const char& type, const int& kl, const int& ku, const float& cfrom, const float& cto,  const int& m, const int& n, float* a, const int& lda, int& info ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::lascl called"));
-#else SIMBODY_WITHOUT_LAPACK  
+#else  
 // TODO    slascl_( type, kl, ku, cfrom, cto, m, n, a, lda, info, 1 ); 
     slascl_( type, kl, ku, &cfrom, &cto, m, n, a, lda, info, 1 ); 
 
@@ -1031,7 +1031,7 @@ template <>
 void LapackInterface::lascl<std::complex<float> >( const char& type, const int& kl, const int& ku, const float& cfrom, const float& cto,  const int& m, const int& n, std::complex<float>* a, const int& lda, int& info) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::lascl called"));
-#else SIMBODY_WITHOUT_LAPACK 
+#else 
 // TODO    clascl_( type, kl, ku, cfrom, cto, m, n, a, lda, info, 1 ); 
     clascl_( type, kl, ku, &cfrom, &cto, m, n, a, lda, info, 1 ); 
 
@@ -1046,7 +1046,7 @@ template <>
 void LapackInterface::lascl<std::complex<double> >( const char& type, const int& kl, const int& ku, const double& cfrom, const double& cto,  const int& m, const int& n, std::complex<double>* a, const int& lda, int& info) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::lascl called"));
-#else SIMBODY_WITHOUT_LAPACK 
+#else 
 // TODO    zlascl_( type, kl, ku, cfrom, cto, m, n, a, lda, info, 1 ); 
     zlascl_( type, kl, ku, &cfrom, &cto, m, n, a, lda, info, 1 ); 
 
@@ -1063,7 +1063,7 @@ double LapackInterface::lange<float>( const char& norm, const int& m, const int&
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::lange called"));
     return 0;
-#else SIMBODY_WITHOUT_LAPACK 
+#else 
 /*
  TODO JACKM because g77 returns FORTRAN REAL's as doubles and gfortran returns them as floats
  changes this once everyone has changed to new libraries and SimTKlapack.h has been updated
@@ -1089,7 +1089,7 @@ double LapackInterface::lange<double>( const char& norm, const int& m, const int
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::lange called"));
     return 0;
-#else SIMBODY_WITHOUT_LAPACK 
+#else 
      return( dlange_( norm, m, n, a, lda, work.data, 1 ) ); 
 #endif
 }
@@ -1099,7 +1099,7 @@ double LapackInterface::lange<std::complex<float> >( const char& norm, const int
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::lange called"));
     return 0;
-#else SIMBODY_WITHOUT_LAPACK 
+#else 
 /*
  TODO JACKM because g77 returns FORTRAN REAL's as doubles and gfortran returns them as floats
  switch to correct LAPACK call when everyone uses SimTKlapack.h has been updated
@@ -1125,7 +1125,7 @@ double LapackInterface::lange<std::complex<double> >( const char& norm, const in
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::lange called"));
     return 0;
-#else SIMBODY_WITHOUT_LAPACK 
+#else 
      TypedWorkSpace<double> work(m);
      return( zlange_( norm, m, n, a, lda, work.data, 1 ) );
 #endif  
@@ -1135,7 +1135,7 @@ template <>
 void LapackInterface::ormqr<float>(const char& side, const char& trans, const int& m, const int& n, const int& k, float* a, const int& lda, float *tau, float *c__, const int& ldc, float* work, const int& lwork, int& info) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::ormqr called"));
-#else SIMBODY_WITHOUT_LAPACK 
+#else 
      sormqr_( side, trans, m, n, k, a, lda, tau, c__, ldc, work, lwork, info, 1, 1 );
 
     if( info < 0 ) {
@@ -1149,7 +1149,7 @@ template <>
 void LapackInterface::ormqr<double>(const char& side, const char& trans, const int& m, const int& n, const int& k, double* a, const int& lda, double *tau, double *c__, const int& ldc, double* work, const int& lwork, int& info) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::ormqr called"));
-#else SIMBODY_WITHOUT_LAPACK 
+#else 
      dormqr_( side, trans, m, n, k, a, lda, tau, c__, ldc, work, lwork, info, 1, 1 );
 
     if( info < 0 ) {
@@ -1163,7 +1163,7 @@ template <>
 void LapackInterface::ormqr<std::complex<double> >(const char& side, const char& trans, const int& m, const int& n, const int& k, std::complex<double>* a, const int& lda, std::complex<double> *tau, std::complex<double> *c__, const int& ldc, std::complex<double>* work, const int& lwork, int& info) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::ormqr called"));
-#else SIMBODY_WITHOUT_LAPACK 
+#else 
      zunmqr_( side, trans, m, n, k, a, lda, tau, c__, ldc, work, lwork, info, 1, 1 );
 
     if( info < 0 ) {
@@ -1177,7 +1177,7 @@ template <>
 void LapackInterface::ormqr<std::complex<float> >(const char& side, const char& trans, const int& m, const int& n, const int& k, std::complex<float>* a, const int& lda, std::complex<float> *tau, std::complex<float> *c__, const int& ldc, std::complex<float>* work, const int& lwork, int& info) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::ormqr called"));
-#else SIMBODY_WITHOUT_LAPACK 
+#else 
      cunmqr_( side, trans, m, n, k, a, lda, tau, c__, ldc, work, lwork, info, 1, 1 );
 
     if( info < 0 ) {
@@ -1191,7 +1191,7 @@ template <>
 void LapackInterface::trsm<float>(const char& side, const char& uplo, const char& transA, const char& diag, const int& m, const int& n, const float& alpha, const float* a, const int& lda, float* b, const int& ldb ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::trsm called"));
-#else SIMBODY_WITHOUT_LAPACK 
+#else 
      strsm_( side, uplo, transA, diag, m, n, alpha, a, lda, b, ldb, 1, 1, 1 );
 #endif
      return;
@@ -1201,7 +1201,7 @@ template <>
 void LapackInterface::trsm<double>(const char& side, const char& uplo, const char& transA, const char& diag, const int& m, const int& n, const double& alpha, const double* a, const int& lda, double* b, const int& ldb ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::trsm called"));
-#else SIMBODY_WITHOUT_LAPACK 
+#else 
      dtrsm_( side, uplo, transA, diag, m, n, alpha, a, lda, b, ldb, 1, 1, 1 );
 #endif
      return;
@@ -1211,7 +1211,7 @@ template <>
 void LapackInterface::trsm<std::complex<double> >(const char& side, const char& uplo, const char& transA, const char& diag, const int& m, const int& n, const std::complex<double>& alpha, const std::complex<double>* a, const int& lda, std::complex<double>* b, const int& ldb ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::trsm called"));
-#else SIMBODY_WITHOUT_LAPACK 
+#else 
      ztrsm_( side, uplo, transA, diag, m, n, alpha, a, lda, b, ldb, 1, 1, 1 );
 #endif
      return;
@@ -1221,7 +1221,7 @@ template <>
 void LapackInterface::trsm<std::complex<float> >(const char& side, const char& uplo, const char& transA, const char& diag, const int& m, const int& n, const std::complex<float>& alpha, const std::complex<float>* a, const int& lda, std::complex<float>* b, const int& ldb ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::trsm called"));
-#else SIMBODY_WITHOUT_LAPACK 
+#else 
      ctrsm_( side, uplo, transA, diag, m, n, alpha, a, lda, b, ldb, 1, 1, 1 );
 #endif
      return;
@@ -1231,7 +1231,7 @@ template <>
 void LapackInterface::ormrz<float>(const char& side, const char& trans, const int& m, const int& n, const int& k, const int& l, float* a, const int& lda, float* tau, float* c__, const int& ldc, float* work, const int& lwork, int& info) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::ormrz called"));
-#else SIMBODY_WITHOUT_LAPACK 
+#else 
    sormrz_( side, trans, m, n, k, l, a, lda, tau, c__, ldc, work, lwork, info, 1, 1 );
 
     if( info < 0 ) {
@@ -1245,7 +1245,7 @@ template <>
 void LapackInterface::ormrz<double>(const char& side, const char& trans, const int& m, const int& n, const int& k, const int& l, double* a, const int& lda, double* tau, double* c__, const int& ldc, double* work, const int& lwork, int& info) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::ormrz called"));
-#else SIMBODY_WITHOUT_LAPACK 
+#else 
    dormrz_( side, trans, m, n, k, l, a, lda, tau, c__, ldc, work, lwork, info, 1, 1 );
 
     if( info < 0 ) {
@@ -1259,7 +1259,7 @@ template <>
 void LapackInterface::ormrz<std::complex<float> >(const char& side, const char& trans, const int& m, const int& n, const int& k, const int& l, std::complex<float>* a, const int& lda, std::complex<float>* tau, std::complex<float>* c__, const int& ldc, std::complex<float>* work, const int& lwork, int& info) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::ormrz called"));
-#else SIMBODY_WITHOUT_LAPACK 
+#else 
    cunmrz_( side, trans, m, n, k, l, a, lda, tau, c__, ldc, work, lwork, info, 1, 1 );
 
     if( info < 0 ) {
@@ -1273,7 +1273,7 @@ template <>
 void LapackInterface::ormrz<std::complex<double> >(const char& side, const char& trans, const int& m, const int& n, const int& k, const int& l, std::complex<double>* a, const int& lda, std::complex<double>* tau, std::complex<double>* c__, const int& ldc, std::complex<double>* work, const int& lwork, int& info) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::ormrz called"));
-#else SIMBODY_WITHOUT_LAPACK 
+#else 
    zunmrz_( side, trans, m, n, k, l, a, lda, tau, c__, ldc, work, lwork, info, 1, 1 );
 
     if( info < 0 ) {
@@ -1287,7 +1287,7 @@ template <>
 void LapackInterface::copy<float>( const int& n, const float* x, const int& incx, float* y, const int& incy) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::copy called"));
-#else SIMBODY_WITHOUT_LAPACK 
+#else 
      scopy_(n, x, incx, y, incy );
 #endif
      return;
@@ -1297,7 +1297,7 @@ template <>
 void LapackInterface::copy<double>( const int& n, const double* x, const int& incx, double* y, const int& incy) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::copy called"));
-#else SIMBODY_WITHOUT_LAPACK 
+#else 
      dcopy_(n, x, incx, y, incy );
 #endif
      return;
@@ -1307,7 +1307,7 @@ template <>
 void LapackInterface::copy<std::complex<float> >( const int& n, const std::complex<float>* x, const int& incx, std::complex<float>* y, const int& incy) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::copy called"));
-#else SIMBODY_WITHOUT_LAPACK 
+#else 
      ccopy_(n, x, incx, y, incy );
 #endif
      return;
@@ -1317,7 +1317,7 @@ template <>
 void LapackInterface::copy<std::complex<double> >( const int& n, const std::complex<double>* x, const int& incx, std::complex<double>* y, const int& incy) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::copy called"));
-#else SIMBODY_WITHOUT_LAPACK 
+#else 
      zcopy_(n, x, incx, y, incy );
 #endif
      return;
@@ -1326,7 +1326,7 @@ template <>
 void LapackInterface::getMachineUnderflow<float>( float& underFlow ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::getMachineUnderflow called"));
-#else SIMBODY_WITHOUT_LAPACK 
+#else 
     underFlow = slamch_('S');
 #endif
     return;
@@ -1335,7 +1335,7 @@ template <>
 void LapackInterface::getMachineUnderflow<double>( double& underFlow ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::getMachineUnderflow called"));
-#else SIMBODY_WITHOUT_LAPACK 
+#else 
     underFlow = dlamch_('S');
 #endif
     return;
@@ -1344,7 +1344,7 @@ template <>
 void LapackInterface::getMachinePrecision<float>( float& smallNumber, float& bigNumber ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::getMachinePrecision called"));
-#else SIMBODY_WITHOUT_LAPACK     
+#else     
     smallNumber = slamch_( 'S' )/slamch_( 'P' );
     bigNumber = 1.f/smallNumber;
     slabad_(smallNumber, bigNumber );
@@ -1355,7 +1355,7 @@ template <>
 void LapackInterface::getMachinePrecision<double>( double& smallNumber, double& bigNumber ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::getMachinePrecision called"));
-#else SIMBODY_WITHOUT_LAPACK     
+#else     
     smallNumber = dlamch_( 'S' )/dlamch_( 'P' );
     bigNumber = 1.0/smallNumber;
     dlabad_(smallNumber, bigNumber );
@@ -1366,7 +1366,7 @@ template <>
 void LapackInterface::laic1<float>(const int& job, const int& j, const float* x, const float& sest, const float* w, const float& gamma, float& sestpr, float& s, float& c__ ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::laic1 called"));
-#else SIMBODY_WITHOUT_LAPACK   
+#else   
     slaic1_( job, j, x, sest, w, gamma, sestpr, s, c__ );
 #endif
     return;
@@ -1376,7 +1376,7 @@ template <>
 void LapackInterface::laic1<double>(const int& job, const int& j, const double* x, const double& sest, const double* w, const double& gamma, double& sestpr, double& s, double& c__ ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::laic1 called"));
-#else SIMBODY_WITHOUT_LAPACK  
+#else  
     dlaic1_( job, j, x, sest, w, gamma, sestpr, s, c__ );
 #endif
     return;
@@ -1386,7 +1386,7 @@ template <>
 void LapackInterface::laic1<std::complex<float> >(const int& job, const int& j, const std::complex<float>* x, const float& sest, const std::complex<float>* w, const std::complex<float>& gamma, float& sestpr, std::complex<float>& s, std::complex<float>& c__ ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::laic1 called"));
-#else SIMBODY_WITHOUT_LAPACK  
+#else  
     claic1_( job, j, x, sest, w, gamma, sestpr, s, c__ );
 #endif
     return;
@@ -1397,7 +1397,7 @@ template <>
 void LapackInterface::laic1<std::complex<double> >(const int& job, const int& j, const std::complex<double>* x, const double& sest, const std::complex<double>* w, const std::complex<double>& gamma, double& sestpr, std::complex<double>& s, std::complex<double>& c__ ) {
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::laic1 called"));
-#else SIMBODY_WITHOUT_LAPACK  
+#else  
     zlaic1_( job, j, x, sest, w, gamma, sestpr, s, c__ );
 #endif
     return;
@@ -1407,7 +1407,7 @@ template <>
 void LapackInterface::potrf<double>( const char& uplo, const int n,  double* a, const int lda, int& info ) { 
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::potrf called"));
-#else SIMBODY_WITHOUT_LAPACK  
+#else  
     dpotrf_(uplo, n, a, lda, info);
     if( info < 0 ) {
         SimTK_THROW2( SimTK::Exception::IllegalLapackArg, "dpotrf", info );
@@ -1420,7 +1420,7 @@ template <>
 void LapackInterface::potrf<float>( const char& uplo, const int n,  float* a, const int lda, int& info ) { 
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::potrf called"));
-#else SIMBODY_WITHOUT_LAPACK  
+#else  
     spotrf_(uplo, n, a, lda, info);
     if( info < 0 ) {
         SimTK_THROW2( SimTK::Exception::IllegalLapackArg, "spotrf", info );
@@ -1433,7 +1433,7 @@ template <>
 void LapackInterface::potrf<std::complex<double> >( const char& uplo, const int n,  std::complex<double>* a, const int lda, int& info ) { 
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::potrf called"));
-#else SIMBODY_WITHOUT_LAPACK  
+#else  
     zpotrf_(uplo, n, a, lda, info);
     if( info < 0 ) {
         SimTK_THROW2( SimTK::Exception::IllegalLapackArg, "zpotrf", info );
@@ -1446,7 +1446,7 @@ template <>
 void LapackInterface::potrf<std::complex<float> >( const char& uplo, const int n,  std::complex<float>* a, const int lda, int& info ) { 
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::potrf called"));
-#else SIMBODY_WITHOUT_LAPACK  
+#else  
     cpotrf_(uplo, n, a, lda, info);
 
     if( info < 0 ) {
@@ -1460,7 +1460,7 @@ template <>
 void LapackInterface::sytrf<float>( const char& uplo, const int n, float* a,  const int lda, int* pivots, float* work, const int lwork, int& info){ 
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::sytrf called"));
-#else SIMBODY_WITHOUT_LAPACK  
+#else  
     ssytrf_( uplo, n, a, lda, pivots, work, lwork, info );
 
     if( info < 0 ) {
@@ -1473,7 +1473,7 @@ template <>
 void LapackInterface::sytrf<double>( const char& uplo, const int n, double* a,  const int lda, int* pivots, double* work, const int lwork, int& info){ 
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::sytrf called"));
-#else SIMBODY_WITHOUT_LAPACK  
+#else  
     dsytrf_( uplo, n, a, lda, pivots, work, lwork, info );
 
     if( info < 0 ) {
@@ -1486,7 +1486,7 @@ template <>
 void LapackInterface::sytrf<std::complex<double> >( const char& uplo, const int n, std::complex<double>* a,  const int lda, int* pivots, std::complex<double>* work, const int lwork, int& info){ 
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::sytrf called"));
-#else SIMBODY_WITHOUT_LAPACK  
+#else  
     zsytrf_( uplo, n, a, lda, pivots, work, lwork, info );
 
     if( info < 0 ) {
@@ -1499,7 +1499,7 @@ template <>
 void LapackInterface::sytrf<std::complex<float> >( const char& uplo, const int n, std::complex<float>* a,  const int lda, int* pivots, std::complex<float>* work, const int lwork, int& info){ 
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::sytrf called"));
-#else SIMBODY_WITHOUT_LAPACK  
+#else  
     csytrf_( uplo, n, a, lda, pivots, work, lwork, info );
 
     if( info < 0 ) {
@@ -1516,7 +1516,7 @@ int LapackInterface::ilaenv<double>( const int& ispec,  const char* name,  const
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::ilaenv called"));
     return 0;
-#else SIMBODY_WITHOUT_LAPACK  
+#else  
      char d[10];
      d[0] = 'd';
      d[1] = '\0';
@@ -1528,7 +1528,7 @@ int LapackInterface::ilaenv<float>( const int& ispec,  const char* name,  const 
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::ilaenv called"));
     return 0;
-#else SIMBODY_WITHOUT_LAPACK  
+#else  
      char s[10];
      s[0] = 's';
      s[1] = '\0';
@@ -1540,7 +1540,7 @@ int LapackInterface::ilaenv<std::complex<double> >( const int& ispec,  const cha
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::ilaenv called"));
     return 0;
-#else SIMBODY_WITHOUT_LAPACK  
+#else  
     char z[10];
      z[0] = 'z';
      z[1] = '\0';
@@ -1552,7 +1552,7 @@ int LapackInterface::ilaenv<std::complex<float> >( const int& ispec,  const char
 #ifdef SIMBODY_WITHOUT_LAPACK
     throw std::runtime_error(std::string("LapackInterface::ilaenv called"));
     return 0;
-#else SIMBODY_WITHOUT_LAPACK  
+#else  
      char c[10];
      c[0] = 'c';
      c[1] = '\0';
