@@ -35,7 +35,7 @@
 #include <cstring>
 #include <stdexcept>
 #include <complex>
-#include <Eigen/Eigenvalues> 
+#include <Eigen/Eigenvalues>
 using namespace std;
 using namespace Eigen;
 
