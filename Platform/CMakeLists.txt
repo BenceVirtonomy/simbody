@@ -11,7 +11,7 @@
 # was replaced with C++11 threading in 2018.
 #-----------------------------------------------------------
 
-set(PLATFORM_ROOT ${CMAKE_SOURCE_DIR}/Platform/${CMAKE_HOST_SYSTEM_NAME})
+set(PLATFORM_ROOT ${PROJECT_SOURCE_DIR}/Platform/${CMAKE_HOST_SYSTEM_NAME})
 
 if(WIN32 AND NOT CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
     # only provided for native builds
