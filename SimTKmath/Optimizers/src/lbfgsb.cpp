@@ -52,8 +52,6 @@
 #include <ctime>
 #include <cstring>
 
-#define SIMBODY_WITHOUT_LAPACK
-
 #ifdef SIMBODY_WITHOUT_LAPACK
 int SimTK::LBFGSBOptimizer::setulb_(int *n, int *m, Real *x, Real *l,
       Real *u, int *nbd, Real *f, Real *g,
