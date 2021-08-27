@@ -683,7 +683,11 @@ template <> void LapackInterface::geev<double>
     double* vl, int ldvl, std::complex<double>* rightVectors, int ldvr, double* work,
     int lwork, int& info )
 {
-#ifdef SIMBODY_WITHOUT_LAPACK
+    TypedWorkSpace<double> wr(n);
+    TypedWorkSpace<double> wi(n);
+    TypedWorkSpace<double> vr(n*n);
+
+//#ifdef SIMBODY_WITHOUT_LAPACK
     // throw std::runtime_error(std::string("LapackInterface::geev called"));
     // TODO: use eigen to replace dgeev_
     MatrixXd matrix(n,n);
@@ -694,14 +698,17 @@ template <> void LapackInterface::geev<double>
         }
     }    
     
-    ComplexEigenSolver<MatrixXd> ces(matrix, /* computeEigenvectors = */ false);
+    ComplexEigenSolver<MatrixXd> ces(matrix, /* computeEigenvectors = */ true);
     cout << "The eigenvalues of the 3x3 matrix of ones are:" 
-        << endl << ces.eigenvalues() << endl;
+        << endl << ces.eigenvalues() << endl << ces.eigenvectors() << endl;
 
-#elif SIMBODY_WITHOUT_LAPACK
-    TypedWorkSpace<double> wr(n);
-    TypedWorkSpace<double> wi(n);
-    TypedWorkSpace<double> vr(n*n);
+    // jobvr to decide if we calculate eigen vectors
+
+    //TypedWorkSpace<double> wr(n); // values real part
+    //TypedWorkSpace<double> wi(n); // values imaginary part
+    //TypedWorkSpace<double> vr(n*n); // vector right
+
+//#else SIMBODY_WITHOUT_LAPACK
 
     // avoid valgrind uninitialized warnings
     for(int i=0;i<n;i++) wi.data[i] = 0;  
@@ -713,6 +720,10 @@ template <> void LapackInterface::geev<double>
     if( info < 0 ) {
         SimTK_THROW2( SimTK::Exception::IllegalLapackArg, "dgeev", info );
     }
+
+    cout << "lapack data: " << endl << wr.data << endl << wi.data << endl << vr.data;
+
+//#endif
 
     for(int i=0;i<n;i++) {
         values[i] = std::complex<double>(wr.data[i], wi.data[i] );
@@ -743,7 +754,8 @@ template <> void LapackInterface::geev<double>
         printf("\n");
     }
 */
-#endif
+
+
 }
 
 template <> void LapackInterface::geev<float>

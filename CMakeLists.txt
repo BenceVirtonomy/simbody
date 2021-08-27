@@ -195,7 +195,7 @@ set(SimTKSIMBODY_STATIC_LIBRARY_VN ${SimTKSIMBODY_LIBRARY_NAME_VN}_static)
 # Caution: this variable is automatically created by the CMake
 # enable_testing() command, but we'll take it over here for
 # our own purposes too.
-set(BUILD_TESTING OFF CACHE BOOL
+set(BUILD_TESTING ON CACHE BOOL
     "Control building of Simbody test programs.
     To actually build tests, one
     or both of BUILD_TESTS_AND_EXAMPLES_STATIC and
@@ -222,7 +222,7 @@ set(BUILD_TESTS_AND_EXAMPLES_STATIC OFF CACHE BOOL
 mark_as_advanced(BUILD_TESTS_AND_EXAMPLES_STATIC)
 
 if(BUILD_DYNAMIC_LIBRARIES)
-    set(BUILD_TESTS_AND_EXAMPLES_SHARED OFF CACHE BOOL
+    set(BUILD_TESTS_AND_EXAMPLES_SHARED ON CACHE BOOL
         "If BUILD_TESTING or BUILD_EXAMPLES, build dynamically-linked ones?")
 else()
     set(BUILD_TESTS_AND_EXAMPLES_SHARED OFF)
