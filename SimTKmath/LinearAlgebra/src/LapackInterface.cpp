@@ -35,9 +35,12 @@
 #include <cstring>
 #include <stdexcept>
 #include <complex>
-#include <Eigen/Eigenvalues>
 using namespace std;
-using namespace Eigen;
+
+#ifdef __EIGEN__
+    #include <Eigen/Eigenvalues>
+    using namespace Eigen;
+#endif // __EIGEN__
 
 #ifdef _MSC_VER
 #pragma warning(disable:4996) // don't warn about strcat, sprintf, etc.
@@ -699,8 +702,26 @@ template <> void LapackInterface::geev<double>
     }    
     
     ComplexEigenSolver<MatrixXd> ces(matrix, /* computeEigenvectors = */ true);
-    cout << "The eigenvalues of the 3x3 matrix of ones are:" 
-        << endl << ces.eigenvalues() << endl << ces.eigenvectors() << endl;
+    cout << "================================================" << endl;
+
+    auto eigen_values = ces.eigenvalues();
+    auto eigen_vectors = ces.eigenvectors();
+
+    cout << "The eigenvalues of the 4x4 matrix of ones are:" 
+        << endl << eigen_values << endl << eigen_vectors << endl;
+    cout << "================================================" << endl;
+    
+    for(int i=0;i<n;i++) {
+        values[i] = eigen_values[n-1-i];
+        //cout << "i: " << values[i] << endl;
+    }
+    cout << "================================================" << endl;
+    
+    for(int i=0;i<n*n;i++) {
+        rightVectors[i] = eigen_vectors(i);
+        cout << "rightVectors i: " << rightVectors[i] << endl;
+    }
+    cout << "================================================" << endl;
 
     // jobvr to decide if we calculate eigen vectors
 
@@ -721,13 +742,17 @@ template <> void LapackInterface::geev<double>
         SimTK_THROW2( SimTK::Exception::IllegalLapackArg, "dgeev", info );
     }
 
-    cout << "lapack data: " << endl << wr.data << endl << wi.data << endl << vr.data;
-
 //#endif
 
-    for(int i=0;i<n;i++) {
-        values[i] = std::complex<double>(wr.data[i], wi.data[i] );
-    }
+    // for(int i=0;i<n;i++) {
+    //     values[i] = std::complex<double>(wr.data[i], wi.data[i] );
+    //     cout << "i: " << values[i] << endl;
+    // }
+
+    // for(int i=0;i<2*n*n;i++) {
+    //     cout << "vr.data i: " << vr.data[i] << endl;
+    // }
+    // cout << "================================================" << endl;
 
     /*
     ** LAPACK returns the eigen vectors as complex conjuate pairs 
@@ -747,7 +772,12 @@ template <> void LapackInterface::geev<double>
             }
             j++;
         }
-    } 
+    }
+    for(int i=0;i<n*n;i++) {
+        cout << "rightVectors i: " << rightVectors[i] << endl;
+    }
+    cout << "================================================" << endl;
+
 /*
     for(int j=0;j<n;j++) { 
         for(int i=0;i<n;i++) printf("%f %f    ", rightVectors(i,j).real(), rightVectors(i,j).imag() ); 
