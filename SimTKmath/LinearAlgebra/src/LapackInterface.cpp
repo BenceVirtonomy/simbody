@@ -690,16 +690,17 @@ template <> void LapackInterface::geev<double>
     TypedWorkSpace<double> wi(n);
     TypedWorkSpace<double> vr(n*n);
 
-//#ifdef SIMBODY_WITHOUT_LAPACK
+#ifdef __EIGEN__
     // throw std::runtime_error(std::string("LapackInterface::geev called"));
     // TODO: use eigen to replace dgeev_
     MatrixXd matrix(n,n);
-    int m = n;
-    for(int col=0;col<n;col++) {
-        for(int row=0;row<m;row++)  {
-             matrix(row,col) = a[col*m+row];
+    for(int row=0;row<n;row++) {
+        for(int col=0;col<n;col++)  {
+             matrix(row,col) = a[col*n+row];
+             //cout << "matrix(row,col): " << matrix(row,col) << endl;
+             //cout << "a[row*n + col]: " << a[row*n + col] << endl;
         }
-    }    
+    } 
     
     ComplexEigenSolver<MatrixXd> ces(matrix, /* computeEigenvectors = */ true);
     cout << "================================================" << endl;
@@ -707,21 +708,19 @@ template <> void LapackInterface::geev<double>
     auto eigen_values = ces.eigenvalues();
     auto eigen_vectors = ces.eigenvectors();
 
-    cout << "The eigenvalues of the 4x4 matrix of ones are:" 
-        << endl << eigen_values << endl << eigen_vectors << endl;
-    cout << "================================================" << endl;
     
     for(int i=0;i<n;i++) {
-        values[i] = eigen_values[n-1-i];
-        //cout << "i: " << values[i] << endl;
+        cout << "Eigen value i: " << eigen_values(i) << " vector i: " << eigen_vectors(i*n) << " " << eigen_vectors(i*n+1) << " " << eigen_vectors(i*n+2) << endl;
     }
-    cout << "================================================" << endl;
-    
-    for(int i=0;i<n*n;i++) {
+
+    for(int i=0;i<n;i++) {
+        values[i] = eigen_values(i);
+    }
+
+    for(int i=0;i<n*n;i++)
+    {
         rightVectors[i] = eigen_vectors(i);
-        cout << "rightVectors i: " << rightVectors[i] << endl;
     }
-    cout << "================================================" << endl;
 
     // jobvr to decide if we calculate eigen vectors
 
@@ -729,7 +728,7 @@ template <> void LapackInterface::geev<double>
     //TypedWorkSpace<double> wi(n); // values imaginary part
     //TypedWorkSpace<double> vr(n*n); // vector right
 
-//#else SIMBODY_WITHOUT_LAPACK
+#else __EIGEN__ // __EIGEN__
 
     // avoid valgrind uninitialized warnings
     for(int i=0;i<n;i++) wi.data[i] = 0;  
@@ -742,12 +741,9 @@ template <> void LapackInterface::geev<double>
         SimTK_THROW2( SimTK::Exception::IllegalLapackArg, "dgeev", info );
     }
 
-//#endif
-
-    // for(int i=0;i<n;i++) {
-    //     values[i] = std::complex<double>(wr.data[i], wi.data[i] );
-    //     cout << "i: " << values[i] << endl;
-    // }
+    for(int i=0;i<n;i++) {
+        values[i] = std::complex<double>(wr.data[i], wi.data[i] );
+    }
 
     // for(int i=0;i<2*n*n;i++) {
     //     cout << "vr.data i: " << vr.data[i] << endl;
@@ -760,6 +756,8 @@ template <> void LapackInterface::geev<double>
     ** else the vectors are returned with the real part in the jth column and the
     ** imaginary part in the j+1 column
     */
+
+
     for(int j=0;j<n;j++) {
         if( fabs(wi.data[j]) < EPS ) {
             for(int i=0;i<n;i++) {
@@ -773,10 +771,11 @@ template <> void LapackInterface::geev<double>
             j++;
         }
     }
-    for(int i=0;i<n*n;i++) {
-        cout << "rightVectors i: " << rightVectors[i] << endl;
+    
+    for(int i=0;i<n;i++) {
+        cout << "Lapack value i: " << values[i] << " vector i: " << rightVectors[i*n] << " " << rightVectors[i*n+1] << " " << rightVectors[i*n+2] << endl;
     }
-    cout << "================================================" << endl;
+
 
 /*
     for(int j=0;j<n;j++) { 
@@ -785,6 +784,7 @@ template <> void LapackInterface::geev<double>
     }
 */
 
+#endif // __EIGEN__
 
 }
 

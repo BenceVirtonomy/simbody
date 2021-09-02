@@ -162,8 +162,9 @@ T absNorm( Vector_<T>& values, Vector_<T>& expected) {
 int main () {
     double errnorm;
     try { 
-           // Default precision (Real, normally double) test.
 
+#ifndef __EIGEN__
+           // Default precision (Real, normally double) test.
         Matrix a(4,4, A);
         Vector_<std::complex<double> > expectedValues(4);
         for(int i=0;i<4;i++) expectedValues[i] = expEigen[i];
@@ -242,6 +243,59 @@ int main () {
         for(int i=0;i<vectors.nrow();i++ ) {
                cout << vectors(i) << endl;
         }
+
+#else // __EIGEN__
+/*
+        cout << "================================================" << endl;
+        cout << "Virtonomy 2x2" << endl;
+        Real V[4] = { 6.0,   -1.0,
+                      2.0,   3.0  };
+
+        Matrix v(2,2, V);
+        Eigen veigen(v);
+        Vector_<std::complex<double> > values_v;
+        Matrix_<std::complex<double> > vectors_v;
+        veigen.getAllEigenValuesAndVectors( values_v, vectors_v); 
+        cout << "Virtonomy 2x2" << endl << "eigenvalues: " << values_v << endl;
+        cout << "Eigen vectors: " << endl;
+        for(int i=0;i<vectors_v.nrow();i++ ) {
+               cout << vectors_v(i) << endl;
+        }
+*/
+        cout << "================================================" << endl;
+        cout << "Virtonomy 3x3" << endl;
+        Real V2[9] = { 1.0, 2.0, 1.0,
+                      6.0, -1.0, 0.0,
+                      -1.0, -2.0, -1.0  };
+
+        Matrix v2(3,3, V2);
+        Eigen v2eigen(v2);
+        Vector_<std::complex<double> > values_v2;
+        Matrix_<std::complex<double> > vectors_v2;
+        v2eigen.getAllEigenValuesAndVectors( values_v2, vectors_v2); 
+        cout << "Virtonomy 3x3" << endl << "eigenvalues: " << values_v2 << endl;
+        cout << "Eigen vectors: " << endl;
+        for(int i=0;i<vectors_v2.nrow();i++ ) {
+               cout << vectors_v2(i) << endl;
+        }
+        cout << "================================================" << endl;
+        cout << "Virtonomy 3x3 symmetric" << endl;
+        Real V3[9] = { 3.0, 2.0, 4.0,
+                      2.0, 0.0, 2.0,
+                      4.0, 2.0, 3.0  };
+
+        Matrix v3(3,3, V3);
+        Eigen v3eigen(v3);
+        Vector_<std::complex<double> > values_v3;
+        Matrix_<std::complex<double> > vectors_v3;
+        v3eigen.getAllEigenValuesAndVectors( values_v3, vectors_v3); 
+        cout << "Virtonomy 3x3 symmetric" << endl << "eigenvalues: " << values_v3 << endl;
+        cout << "Eigen vectors: " << endl;
+        for(int i=0;i<vectors_v3.nrow();i++ ) {
+               cout << vectors_v3(i) << endl;
+        }
+
+#endif // __EIGEN__
 
 /*
 //
