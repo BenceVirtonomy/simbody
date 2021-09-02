@@ -703,15 +703,13 @@ template <> void LapackInterface::geev<double>
     } 
     
     ComplexEigenSolver<MatrixXd> ces(matrix, /* computeEigenvectors = */ true);
-    cout << "================================================" << endl;
 
     auto eigen_values = ces.eigenvalues();
     auto eigen_vectors = ces.eigenvectors();
 
-    
-    for(int i=0;i<n;i++) {
-        cout << "Eigen value i: " << eigen_values(i) << " vector i: " << eigen_vectors(i*n) << " " << eigen_vectors(i*n+1) << " " << eigen_vectors(i*n+2) << endl;
-    }
+    // for(int i=0;i<n;i++) {
+    //     cout << "Eigen value i: " << eigen_values(i) << " vector i: " << eigen_vectors(i*n) << " " << eigen_vectors(i*n+1) << " " << eigen_vectors(i*n+2) << endl;
+    // }
 
     for(int i=0;i<n;i++) {
         values[i] = eigen_values(i);

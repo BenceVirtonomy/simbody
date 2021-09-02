@@ -117,13 +117,11 @@ set(EXECUTABLE_OUTPUT_PATH ${BUILD_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH ${BUILD_BINARY_DIR})
 
 # Dynamic libraries, tests, and examples
-set(BUILD_DYNAMIC_LIBRARIES TRUE CACHE BOOL
-"Build dynamic versions of libraries")
+option(BUILD_DYNAMIC_LIBRARIES 1)
 
 # Static libraries, tests, and examples won't be built unless this
 # is set.
-set(BUILD_STATIC_LIBRARIES FALSE CACHE BOOL
-"Build '_static' versions of libraries")
+option(BUILD_STATIC_LIBRARIES 0)
 
 if(NOT BUILD_DYNAMIC_LIBRARIES AND NOT BUILD_STATIC_LIBRARIES)
     message(SEND_ERROR "BUILD_DYNAMIC_LIBRARIES and BUILD_STATIC_LIBRARIES "
