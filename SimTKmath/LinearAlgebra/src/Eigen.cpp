@@ -147,10 +147,10 @@ EigenRep<T>::EigenRep( const Matrix_<ELT>& mat):
     needValues(true),
     needVectors(true) {  
 
-#ifndef SIMBODY_WITHOUT_LAPACK         
+#ifndef __SIMBODY_WITHOUT_LAPACK__         
     LapackInterface::getMachineUnderflow( abstol );
     abstol *= 0.5;
-#endif // SIMBODY_WITHOUT_LAPACK   
+#endif // __SIMBODY_WITHOUT_LAPACK__   
 
     LapackConvert::convertMatrixToLapack( inputMatrix.data, mat );
     isFactored = true;

@@ -31,7 +31,7 @@
 #include <cmath>
 
 
-#ifdef SIMBODY_WITHOUT_LAPACK
+#ifdef __SIMBODY_WITHOUT_LAPACK__
 void SimTK::LBFGSOptimizer::lbfgs_
    (int n, int m, SimTK::Real *x, SimTK::Real *f, 
     int *iprint, SimTK::Real *eps, SimTK::Real *xtol)
@@ -1384,4 +1384,4 @@ void lb1_( int *iprint, int *iter, int *nfun, Real *gnorm, int *n,
 /*  END*/
 }
 
-#endif // SIMBODY_WITHOUT_LAPACK
+#endif // __SIMBODY_WITHOUT_LAPACK__

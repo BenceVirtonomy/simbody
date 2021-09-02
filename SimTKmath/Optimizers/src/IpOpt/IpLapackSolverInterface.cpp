@@ -4,7 +4,7 @@
 
 
 
-#ifndef SIMBODY_WITHOUT_LAPACK
+#ifndef __SIMBODY_WITHOUT_LAPACK__
 
 #if SimTK_DEFAULT_PRECISION==1 // float
 #define DGELSD   sgelsd_
@@ -18,7 +18,7 @@
 #define DGETRS   dgetrs_
 #endif
 
-#endif // SIMBODY_WITHOUT_LAPACK
+#endif // __SIMBODY_WITHOUT_LAPACK__
 
 namespace SimTKIpopt
 {
@@ -63,7 +63,7 @@ namespace SimTKIpopt
       Index nrhs, Number* rhs_vals, bool check_NegEVals,
       Index numberOfNegEVals)
   {
-#ifdef SIMBODY_WITHOUT_LAPACK
+#ifdef __SIMBODY_WITHOUT_LAPACK__
     throw std::runtime_error(std::string("LapackSolverInterface::MultiSolve called"));
     ESymSolverStatus retval = SYMSOLVER_SUCCESS;
     return retval;
@@ -136,7 +136,7 @@ namespace SimTKIpopt
       }
       delete [] atmp;
       return retval;
-#endif // SIMBODY_WITHOUT_LAPACK
+#endif // __SIMBODY_WITHOUT_LAPACK__
   }
 
 
@@ -173,7 +173,7 @@ namespace SimTKIpopt
   ESymSolverStatus LapackSolverInterface::Factorization(const Index* ia, const Index* ja,
       bool check_NegEVals, Index numberOfNegEVals)
   {
-#ifdef SIMBODY_WITHOUT_LAPACK
+#ifdef __SIMBODY_WITHOUT_LAPACK__
     throw std::runtime_error(std::string("LapackSolverInterface::Factorization called"));
     ESymSolverStatus retval = SYMSOLVER_SUCCESS;
     return retval;
@@ -223,12 +223,12 @@ namespace SimTKIpopt
       }
 
       return retval;
-#endif // SIMBODY_WITHOUT_LAPACK
+#endif // __SIMBODY_WITHOUT_LAPACK__
   }
 
   ESymSolverStatus LapackSolverInterface::Solve(const Index* ia, const Index* ja, Index nrhs, Number *b)
   {
-#ifdef SIMBODY_WITHOUT_LAPACK
+#ifdef __SIMBODY_WITHOUT_LAPACK__
     throw std::runtime_error(std::string("LapackSolverInterface::Solve called"));
     ESymSolverStatus retval = SYMSOLVER_SUCCESS;
     return retval;
@@ -251,7 +251,7 @@ namespace SimTKIpopt
 
 
     return retval;
-#endif // SIMBODY_WITHOUT_LAPACK
+#endif // __SIMBODY_WITHOUT_LAPACK__
   }
 
   Index LapackSolverInterface::NumberOfNegEVals() const

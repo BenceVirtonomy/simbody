@@ -72,7 +72,7 @@ public:
 
 };
 
-#ifndef SIMBODY_WITHOUT_LAPACK
+#ifndef __SIMBODY_WITHOUT_LAPACK__
     // xGEMM //
 
 template <> inline void Lapack::gemm<float>
@@ -124,7 +124,7 @@ template <> inline void Lapack::gemm< complex<double> >
     );
 }
 
-#endif // SIMBODY_WITHOUT_LAPACK
+#endif // __SIMBODY_WITHOUT_LAPACK__
 
     // xGETRI //
 
@@ -137,7 +137,7 @@ template <> inline void Lapack::getri<float>
     int          lwork, 
     int&         info )
 {
-#ifdef SIMBODY_WITHOUT_LAPACK
+#ifdef __SIMBODY_WITHOUT_LAPACK__
     throw std::runtime_error(std::string("Lapack::getri called"));
 #else
     sgetri_(n,a,lda,ipiv,work,lwork,info);
@@ -153,7 +153,7 @@ template <> inline void Lapack::getri<double>
     int          lwork, 
     int&         info )
 {
-#ifdef SIMBODY_WITHOUT_LAPACK
+#ifdef __SIMBODY_WITHOUT_LAPACK__
     throw std::runtime_error(std::string("Lapack::getri called"));
 #else
     dgetri_(n,a,lda,ipiv,work,lwork,info);
@@ -169,7 +169,7 @@ template <> inline void Lapack::getri< complex<float> >
     int             lwork, 
     int&            info )
 {
-#ifdef SIMBODY_WITHOUT_LAPACK
+#ifdef __SIMBODY_WITHOUT_LAPACK__
     throw std::runtime_error(std::string("Lapack::getri called"));
 #else
     cgetri_(n,a,lda,ipiv,work,lwork,info);
@@ -185,7 +185,7 @@ template <> inline void Lapack::getri< complex<double> >
     int             lwork, 
     int&            info )
 {
-#ifdef SIMBODY_WITHOUT_LAPACK
+#ifdef __SIMBODY_WITHOUT_LAPACK__
     throw std::runtime_error(std::string("Lapack::getri called"));
 #else
     zgetri_(n,a,lda,ipiv,work,lwork,info);
@@ -201,7 +201,7 @@ template <> inline void Lapack::getrf<float>
     int          ipiv[], 
     int&         info )
 {
-#ifdef SIMBODY_WITHOUT_LAPACK
+#ifdef __SIMBODY_WITHOUT_LAPACK__
     throw std::runtime_error(std::string("Lapack::getrf called"));
 #else
     sgetrf_(m,n,a,lda,ipiv,info);
@@ -216,7 +216,7 @@ template <> inline void Lapack::getrf<double>
     int          ipiv[], 
     int&         info )
 {
-#ifdef SIMBODY_WITHOUT_LAPACK
+#ifdef __SIMBODY_WITHOUT_LAPACK__
     throw std::runtime_error(std::string("Lapack::getrf called"));
 #else
     dgetrf_(m,n,a,lda,ipiv,info);
@@ -231,7 +231,7 @@ template <> inline void Lapack::getrf< complex<float> >
     int             ipiv[], 
     int&            info )
 {
-#ifdef SIMBODY_WITHOUT_LAPACK
+#ifdef __SIMBODY_WITHOUT_LAPACK__
     throw std::runtime_error(std::string("Lapack::getrf called"));
 #else
     cgetrf_(m,n,a,lda,ipiv,info);
@@ -246,7 +246,7 @@ template <> inline void Lapack::getrf< complex<double> >
     int             ipiv[], 
     int&            info )
 {
-#ifdef SIMBODY_WITHOUT_LAPACK
+#ifdef __SIMBODY_WITHOUT_LAPACK__
     throw std::runtime_error(std::string("Lapack::getrf called"));
 #else
     zgetrf_(m,n,a,lda,ipiv,info);

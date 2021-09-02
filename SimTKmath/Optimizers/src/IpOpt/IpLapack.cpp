@@ -10,7 +10,7 @@
 #include "IpLapack.hpp"
 
 
-#ifndef SIMBODY_WITHOUT_LAPACK
+#ifndef __SIMBODY_WITHOUT_LAPACK__
 
 #if SimTK_DEFAULT_PRECISION==1 // float
 #define DPOTRS  spotrs_
@@ -58,7 +58,7 @@ extern "C"
                              int jobz_len, int uplo_len);
 }
 
-#endif // SIMBODY_WITHOUT_LAPACK
+#endif // __SIMBODY_WITHOUT_LAPACK__
 
 namespace SimTKIpopt
 {
@@ -66,7 +66,7 @@ namespace SimTKIpopt
   void IpLapackDpotrs(Index ndim, Index nrhs, const Number *a, Index lda,
                       Number *b, Index ldb)
   {
-#ifdef SIMBODY_WITHOUT_LAPACK
+#ifdef __SIMBODY_WITHOUT_LAPACK__
     throw std::runtime_error(std::string("SimTKIpopt::IpLapackDpotrs called"));
 #else
 #ifdef COIN_HAS_LAPACK
@@ -85,7 +85,7 @@ namespace SimTKIpopt
 
   void IpLapackDpotrf(Index ndim, Number *a, Index lda, Index& info)
   {
-#ifdef SIMBODY_WITHOUT_LAPACK
+#ifdef __SIMBODY_WITHOUT_LAPACK__
     throw std::runtime_error(std::string("SimTKIpopt::IpLapackDpotrf called"));
 #else
 #ifdef COIN_HAS_LAPACK
@@ -107,7 +107,7 @@ namespace SimTKIpopt
   void IpLapackDsyev(bool compute_eigenvectors, Index ndim, Number *a,
                      Index lda, Number *w, Index& info)
   {
-#ifdef SIMBODY_WITHOUT_LAPACK
+#ifdef __SIMBODY_WITHOUT_LAPACK__
     throw std::runtime_error(std::string("SimTKIpopt::IpLapackDsyev called"));
 #else
 #ifdef COIN_HAS_LAPACK
