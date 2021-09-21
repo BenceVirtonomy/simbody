@@ -116,12 +116,17 @@ set(BUILD_BINARY_DIR ${CMAKE_BINARY_DIR}
 set(EXECUTABLE_OUTPUT_PATH ${BUILD_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH ${BUILD_BINARY_DIR})
 
-# Dynamic libraries, tests, and examples
-option(BUILD_DYNAMIC_LIBRARIES 1)
+if(NOT EMSCRIPTEN)
+    # Dynamic libraries, tests, and examples
+    option(BUILD_DYNAMIC_LIBRARIES 1)
 
-# Static libraries, tests, and examples won't be built unless this
-# is set.
-option(BUILD_STATIC_LIBRARIES 0)
+    # Static libraries, tests, and examples won't be built unless this
+    # is set.
+    option(BUILD_STATIC_LIBRARIES 0)
+else()
+    set(BUILD_DYNAMIC_LIBRARIES 0)
+    set(BUILD_STATIC_LIBRARIES 1)
+endif()
 
 if(NOT BUILD_DYNAMIC_LIBRARIES AND NOT BUILD_STATIC_LIBRARIES)
     message(SEND_ERROR "BUILD_DYNAMIC_LIBRARIES and BUILD_STATIC_LIBRARIES "
