@@ -255,6 +255,15 @@ public:
     @param[in]  pathname    The name of a .stl or .stla file. **/
     void loadStlFile(const String& pathname);
 
+    /** Load an STL buffer, adding the vertices and faces it contains to this 
+    mesh and ignoring anything else in the buffer. The buffer may be in ascii or 
+    binary format. We'll examine the contents to 
+    determine which format is used. STL buffer include many repeated vertices;
+    we will collapse any that coincide to within a small tolerance so that there
+    is some hope of getting a connected surface.
+    @param[in]  buffer    The pointer to buffer of stl data. **/
+    void loadStlBuffer(const uint8_t* buffer);
+
 private:
     explicit PolygonalMesh(PolygonalMeshImpl* impl) : HandleBase(impl) {}
     void initializeHandleIfEmpty();

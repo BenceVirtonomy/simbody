@@ -500,6 +500,88 @@ private:
     std::stringstream m_restOfLine;     // full line except first token
 };
 
+int32_t get_int32(const uint8_t* ptr, size_t index) {
+    return (int32_t)(reinterpret_cast<const int32_t*>(ptr))[index];
+};
+
+int8_t get_int8(const uint8_t* ptr, size_t index) {
+    return (int8_t)(reinterpret_cast<const int8_t*>(ptr))[index];
+};
+
+float get_float(const uint8_t* ptr, size_t index) {
+    return (float)reinterpret_cast<const float*>(ptr)[index];
+};
+
+
+class STLBuffer {
+public:
+    STLBuffer()
+    : m_vertexTol(NTraits<float>::getSignificant())
+    , m_lineNo(0)
+    , m_sigLineNo(0) 
+    {
+    }
+
+    bool isBinaryFile(const uint8_t* buffer) const {
+        auto bufferSize = get_int32(buffer, 0);
+
+        size_t expect;
+        size_t face_size;
+        size_t n_faces;
+   		face_size = ( 32 / 8 * 3 ) + ( ( 32 / 8 * 3 ) * 3 ) + ( 16 / 8 );
+   		n_faces = get_int32(buffer, 84);
+   		expect = 80 + ( 32 / 8 ) + ( n_faces * face_size );
+
+   		if (expect == bufferSize) {
+   			return true;
+   		}
+
+   		uint8_t solid[5] = { 115, 111, 108, 105, 100 };
+
+   		for (int i = 0; i < 5; ++i) {
+   			if ( solid[i] != get_int8(buffer, i + 4)) return true;
+    	}
+   		return false;
+    }
+
+    void loadStlAsciiBuffer(const uint8_t* buffer, PolygonalMesh& mesh);
+    void loadStlBinaryBuffer(const uint8_t* buffer, PolygonalMesh& mesh);
+    bool getSignificantLine(bool eofOK);
+
+private:
+    // Look for a vertex close enough to this one and return its index if found,
+    // otherwise add to the mesh.
+    int getVertex(const Vec3& v, PolygonalMesh& mesh) {
+        const VertKey key(v, m_vertexTol);
+        VertMap::const_iterator p = m_vertMap.find(key);
+        int ix;
+        if (p != m_vertMap.end()) 
+            ix = p->second;
+        else {
+            ix = mesh.addVertex(v);
+            m_vertMap.insert(std::make_pair(key,ix));
+        }
+        return ix;
+    }
+
+    VertMap           m_vertMap;
+    const Real        m_vertexTol;
+
+    int               m_lineNo;         // current line in file
+    int               m_sigLineNo;      // line # not counting blanks, comments
+    String            m_keyword;        // first non-blank token on line
+    std::stringstream m_restOfLine; 
+    std::vector<std::string> m_lines;
+};
+
+}
+
+void PolygonalMesh::loadStlBuffer(const uint8_t* buffer) {
+    STLBuffer stlbuffer;
+    if (stlbuffer.isBinaryFile(buffer))
+        stlbuffer.loadStlBinaryBuffer(buffer, *this);
+    else
+        stlbuffer.loadStlAsciiBuffer(buffer, *this);
 }
 
 void PolygonalMesh::loadStlFile(const String& pathname) {
@@ -734,6 +816,134 @@ bool STLFile::getSignificantLine(bool eofOK) {
         "Error at line %d in ASCII STL file '%s':\n"
         "  unexpected end of file.", m_lineNo, m_pathcstr);
     return false;
+}
+
+bool STLBuffer::getSignificantLine(bool eofOK) {
+    auto line = m_lines[m_lineNo];
+
+    while (m_lineNo < m_lines.size()) {
+        ++m_lineNo;
+
+        m_keyword = String::trimWhiteSpace(line); // using keyword as a temp
+
+        if ( m_keyword.empty() || m_keyword[0]=='#' || m_keyword[0]=='!' || m_keyword[0]=='$') 
+        {
+            line = m_lines[m_lineNo];
+            continue; // blank or comment
+        }
+        // Found a significant line.
+        ++m_sigLineNo;
+        m_keyword.toLower();
+        m_restOfLine.clear();
+        m_restOfLine.str(m_keyword);
+        m_restOfLine >> m_keyword; // now it's the keyword at beginning of line
+        return true;
+    }
+
+    // Must be EOF.
+    SimTK_ERRCHK1_ALWAYS(eofOK, "PolygonalMesh::loadStlFile()",
+        "Error at line %d in ASCII STL file:\n"
+        "  unexpected end of file.", m_lineNo);
+    return false;
+}
+
+void STLBuffer::loadStlAsciiBuffer(const uint8_t* buffer, PolygonalMesh& mesh) {
+    const auto bufferSize = get_int32(buffer, 0);
+
+    std::string str_line = "";
+    for (int i = 0; i < bufferSize; ++i) {
+        auto e = get_int8(buffer, i + 4);
+        if (e == 10)
+        {
+            m_lines.push_back(std::move(str_line));
+            str_line.clear();
+        }
+        else
+            str_line += static_cast<char>(e);
+    }  
+
+    Array_<int> vertices;
+
+    // Don't allow EOF until we've seen two significant lines.
+    while (getSignificantLine(m_sigLineNo >= 2)) {
+        if (m_sigLineNo==1 && m_keyword == "solid") continue;
+        if (m_sigLineNo>1 && m_keyword == "endsolid")
+            break;
+        if (m_keyword == "color") continue;
+
+        if (m_keyword == "facet" || m_keyword == "facetnormal") {
+            // We're ignoring the normal on the facet line.
+            getSignificantLine(false);
+
+            bool outerLoopSeen=false;
+            if (m_keyword=="outer" || m_keyword=="outerloop") {
+                outerLoopSeen = true;
+                getSignificantLine(false);
+            }
+
+            // Now process vertices.
+            vertices.clear();
+            while (m_keyword == "vertex") {
+                Vec3 vertex;
+                m_restOfLine >> vertex;
+                SimTK_ERRCHK1_ALWAYS(m_restOfLine.eof(), 
+                    "PolygonalMesh::loadStlFile()",
+                    "Error at line %d in ASCII STL file"
+                    "  badly formed vertex.", m_lineNo);
+                vertices.push_back(getVertex(vertex, mesh));
+                getSignificantLine(false);
+            }
+
+            // Next keyword is not "vertex".
+            SimTK_ERRCHK2_ALWAYS(vertices.size() >= 3, 
+                "PolygonalMesh::loadStlFile()",
+                "Error at line %d in ASCII STL file \n"
+                "  a facet had %d vertices; at least 3 required.", 
+                m_lineNo, vertices.size());
+
+            mesh.addFace(vertices);
+
+            // Vertices must end with 'endloop' if started with 'outer loop'.
+            if (outerLoopSeen) {
+                SimTK_ERRCHK2_ALWAYS(m_keyword=="endloop", 
+                    "PolygonalMesh::loadStlFile()",
+                    "Error at line %d in ASCII STL file \n"
+                    "  expected 'endloop' but got '%s'.",
+                    m_lineNo, m_keyword.c_str());
+                getSignificantLine(false);
+            }
+
+            // Now we expect 'endfacet'.
+            SimTK_ERRCHK2_ALWAYS(m_keyword=="endfacet", 
+                "PolygonalMesh::loadStlFile()",
+                "Error at line %d in ASCII STL file \n"
+                "  expected 'endfacet' but got '%s'.",
+                m_lineNo, m_keyword.c_str());
+        }
+    }
+    
+}
+
+void STLBuffer::loadStlBinaryBuffer(const uint8_t* buffer, PolygonalMesh& mesh) {
+    auto nFaces = get_int8(buffer, 84);
+    auto vz = 3 * sizeof(float);
+        
+    size_t bufferPos = 88;
+    size_t faceLength = 12 * 4 + 2;
+
+    for (int fx = 0; fx < nFaces; ++fx) {
+        size_t start = bufferPos + fx * faceLength;
+        Array_<int> vertices(3);
+        
+        for (int vx =0 ; vx < 3; ++vx) {
+            size_t vertexStart = start + vx * 12;
+            const Vec3 vertex((Real)get_float(buffer, vertexStart),
+                              (Real)get_float(buffer, vertexStart + 4), 
+                              (Real)get_float(buffer, vertexStart + 8)); 
+            vertices[vx] = getVertex(vertex, mesh);
+        }
+        mesh.addFace(vertices);
+    }
 }
 
 //------------------------------------------------------------------------------
