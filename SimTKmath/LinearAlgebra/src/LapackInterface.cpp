@@ -770,9 +770,9 @@ template <> void LapackInterface::geev<double>
         }
     }
     
-    for(int i=0;i<n;i++) {
-        cout << "Lapack value i: " << values[i] << " vector i: " << rightVectors[i*n] << " " << rightVectors[i*n+1] << " " << rightVectors[i*n+2] << endl;
-    }
+    // for(int i=0;i<n;i++) {
+    //     cout << "Lapack value i: " << values[i] << " vector i: " << rightVectors[i*n] << " " << rightVectors[i*n+1] << " " << rightVectors[i*n+2] << endl;
+    // }
 
 
 /*
