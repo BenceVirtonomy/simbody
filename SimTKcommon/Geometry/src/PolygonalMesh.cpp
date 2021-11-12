@@ -501,15 +501,15 @@ private:
 };
 
 int32_t get_int32(const uint8_t* ptr, size_t index) {
-    return (int32_t)(reinterpret_cast<const int32_t*>(ptr))[index];
+    return *reinterpret_cast<const int32_t*>(ptr + index);
 };
 
 int8_t get_int8(const uint8_t* ptr, size_t index) {
-    return (int8_t)(reinterpret_cast<const int8_t*>(ptr))[index];
+    return *reinterpret_cast<const int8_t*>(ptr + index);
 };
 
 float get_float(const uint8_t* ptr, size_t index) {
-    return (float)reinterpret_cast<const float*>(ptr)[index];
+    return *reinterpret_cast<const float*>(ptr + index);
 };
 
 
@@ -925,7 +925,7 @@ void STLBuffer::loadStlAsciiBuffer(const uint8_t* buffer, PolygonalMesh& mesh) {
 }
 
 void STLBuffer::loadStlBinaryBuffer(const uint8_t* buffer, PolygonalMesh& mesh) {
-    auto nFaces = get_int8(buffer, 84);
+    auto nFaces = get_int32(buffer, 84);
     auto vz = 3 * sizeof(float);
         
     size_t bufferPos = 88;
@@ -935,8 +935,8 @@ void STLBuffer::loadStlBinaryBuffer(const uint8_t* buffer, PolygonalMesh& mesh) 
         size_t start = bufferPos + fx * faceLength;
         Array_<int> vertices(3);
         
-        for (int vx =0 ; vx < 3; ++vx) {
-            size_t vertexStart = start + vx * 12;
+        for (int vx = 0 ; vx < 3; ++vx) {
+            size_t vertexStart = start + vx * 12 + 12;
             const Vec3 vertex((Real)get_float(buffer, vertexStart),
                               (Real)get_float(buffer, vertexStart + 4), 
                               (Real)get_float(buffer, vertexStart + 8)); 
